@@ -32,9 +32,9 @@ function EditarProducto({
     useContext(ContextGeneral);
 
   const [descuentoActivo, setDescuentoActivo] = useState(descuento2);
-  const [destacadoActivo, setDestacadoActivo] = useState(() => {
-    destacado2 ? destacado2 : false;
-  });
+
+  const dest = destacado2 ? destacado2 : false;
+  const [destacadoActivo, setDestacadoActivo] = useState(dest);
   const [loadImg, setLoadImg] = useState(true);
 
   const [image, setImage] = useState(img2);
