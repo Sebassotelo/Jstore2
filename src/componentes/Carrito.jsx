@@ -57,7 +57,7 @@ function Carrito({ showCarrito, show }) {
           cuponDesc = `%0ACupon%20${cuponActivo.cupon}%20activo.%20Descuento%20de%20${cuponActivo.monto}%20porciento.`;
         }
 
-        if (cantidadFinal >= 4) {
+        if (cantidadFinal >= 4 && context.descuentoCantidad) {
           descuentoCantidad = `%0ADescuento%20por%20Cantidad.%20Descuento%20de%20$${
             cantidadFinal * 60
           }%20.`;
@@ -156,7 +156,7 @@ function Carrito({ showCarrito, show }) {
       setPrecioFinal(precioTotal);
     }
 
-    if (cantidadTotal >= 4) {
+    if (cantidadTotal >= 4 && context.descuentoCantidad) {
       precioTotal = precioTotal - cantidadTotal * 60;
       setPrecioFinal(precioTotal);
     }
@@ -259,7 +259,7 @@ function Carrito({ showCarrito, show }) {
           <p>${precioFinal}</p>
         </div>
 
-        {cantidadFinal >= 4 && (
+        {cantidadFinal >= 4 && context.descuentoCantidad && (
           <p>
             Descuento aplicado de <span>$60</span> por par. Total:{" "}
             <span>${cantidadFinal * 60}</span>

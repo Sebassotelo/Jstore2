@@ -7,8 +7,14 @@ import Cupones from "./Cupones";
 
 function Descuentos() {
   const context = useContext(ContextGeneral);
-  const { setProductos, setProductosCopia, setLoader, setCupones, llamadaDB } =
-    useContext(ContextGeneral);
+  const {
+    setProductos,
+    setProductosCopia,
+    setLoader,
+    setCupones,
+    llamadaDB,
+    setDescuentoCantidad,
+  } = useContext(ContextGeneral);
 
   const [contadorProductos, setContadorProductos] = useState(0);
 
@@ -108,6 +114,23 @@ function Descuentos() {
     }
   };
 
+  const setearDescuentoCantidad = async () => {
+    if (
+      confirm(`Seguro que desea cambiar el descuento por cantidad?`) === true
+    ) {
+      setLoader(false);
+      //traemos los datos de base de datos
+      const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
+
+      await updateDoc(docRef, { descuento: context.descuentoCantidad });
+      llamadaDB();
+    }
+  };
+
+  const cambiarDescuentoCantidad = () => {
+    setDescuentoCantidad(!context.descuentoCantidad);
+  };
+
   const contadorProductosDescuento = () => {
     const nuevoArray = context.productosCopia.filter((item) => item.descuento);
     setContadorProductos(nuevoArray.length);
@@ -161,6 +184,41 @@ function Descuentos() {
           >
             Quitar Descuento a Todos los Productos
           </p>
+        </div>
+        <div className={style.container__descuentos__item}>
+          <p className={style.title}>Descuento Cantidad:</p>
+          {context.descuentoCantidad ? (
+            <p
+              className={style.descuento__seccion}
+              style={{
+                backgroundColor: "green",
+                width: "200px",
+                height: "50px",
+              }}
+              onClick={cambiarDescuentoCantidad}
+            >
+              Descuento ACTIVADO
+            </p>
+          ) : (
+            <p
+              className={style.descuento__seccion}
+              style={{
+                backgroundColor: "red",
+                width: "200px",
+                height: "50px",
+              }}
+              onClick={cambiarDescuentoCantidad}
+            >
+              Descuento Desactivado
+            </p>
+          )}
+
+          <button
+            className={style.descuento__button}
+            onClick={setearDescuentoCantidad}
+          >
+            Guardar
+          </button>
         </div>
       </div>
 

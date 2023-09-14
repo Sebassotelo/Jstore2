@@ -22,6 +22,21 @@
       border-radius: 15px;
       display: grid;
       justify-items: center;
+
+      .descuento__button{
+        width: 100px;
+        border: none;
+        border-radius: 15px;
+        background-color: $white-color;
+        color: $black-color;
+        font-weight: 600;
+        cursor: pointer;
+        transition-duration: .3s;
+
+        &:hover{
+          transform: scale(1.02);
+        }
+      }
     }
   }
   .h3 {
