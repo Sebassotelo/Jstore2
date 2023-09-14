@@ -4,6 +4,7 @@ import ContextGeneral from "@/servicios/contextPrincipal";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import ProductoPanel from "./ProductoPanel";
 import Cupones from "./Cupones";
+import { toast } from "sonner";
 
 function Descuentos() {
   const context = useContext(ContextGeneral);
@@ -123,7 +124,9 @@ function Descuentos() {
       const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
 
       await updateDoc(docRef, { descuento: context.descuentoCantidad });
+
       llamadaDB();
+      toast.success(`Se realizo la operacion con exito`);
     }
   };
 
