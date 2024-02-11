@@ -15,6 +15,7 @@ function Carrito({ showCarrito, show }) {
   const { setCarrito, actualizacionCarrito } = useContext(ContextGeneral);
   const [precioFinal, setPrecioFinal] = useState(0);
   const [cantidadFinal, setCantidadFinal] = useState(0);
+  const [totalDescuento, setTotalDescuento] = useState(0);
   const [pedido, setPedido] = useState();
   const [cuponActivo, setCuponActivo] = useState({});
 
@@ -57,12 +58,27 @@ function Carrito({ showCarrito, show }) {
           cuponDesc = `%0ACupon%20${cuponActivo.cupon}%20activo.%20Descuento%20de%20${cuponActivo.monto}%20porciento.`;
         }
 
-        if (cantidadFinal >= 4 && context.descuentoCantidad) {
-          descuentoCantidad = `%0ADescuento%20por%20Cantidad.%20Descuento%20de%20$${
-            cantidadFinal * 60
-          }%20.`;
+        if (
+          cantidadFinal >= 3 &&
+          cantidadFinal < 6 &&
+          context.descuentoCantidad
+        ) {
+          descuentoCantidad = `%0ADescuento%20por%20Cantidad.%20Descuento%20de%20$${totalDescuento}%20.`;
+        } else if (
+          cantidadFinal >= 6 &&
+          cantidadFinal < 9 &&
+          context.descuentoCantidad
+        ) {
+          descuentoCantidad = `%0ADescuento%20por%20Cantidad.%20Descuento%20de%20$${totalDescuento}%20.`;
+        } else if (
+          cantidadFinal >= 9 &&
+          cantidadFinal < 12 &&
+          context.descuentoCantidad
+        ) {
+          descuentoCantidad = `%0ADescuento%20por%20Cantidad.%20Descuento%20de%20$${totalDescuento}%20.`;
+        } else if (cantidadFinal >= 12 && context.descuentoCantidad) {
+          descuentoCantidad = `%0ADescuento%20por%20Cantidad.%20Descuento%20de%20$${totalDescuento}%20.`;
         }
-
         setPedido(
           `Hola%20chico%20de%20las%20medias%20🧦!%20Este%20es%20mi%20pedido:%0A%0A${pedidoCopy}%0ATotal:%20$${precioFinal}${
             cuponActivo && cuponDesc
@@ -156,8 +172,29 @@ function Carrito({ showCarrito, show }) {
       setPrecioFinal(precioTotal);
     }
 
-    if (cantidadTotal >= 4 && context.descuentoCantidad) {
-      precioTotal = precioTotal - cantidadTotal * 60;
+    if (cantidadTotal >= 3 && cantidadTotal < 6 && context.descuentoCantidad) {
+      setTotalDescuento(precioTotal * 0.05);
+      precioTotal = precioTotal * 0.95;
+      setPrecioFinal(precioTotal);
+    } else if (
+      cantidadTotal >= 6 &&
+      cantidadTotal < 9 &&
+      context.descuentoCantidad
+    ) {
+      setTotalDescuento(precioTotal * 0.1);
+      precioTotal = precioTotal * 0.9;
+      setPrecioFinal(precioTotal);
+    } else if (
+      cantidadTotal >= 9 &&
+      cantidadTotal < 12 &&
+      context.descuentoCantidad
+    ) {
+      setTotalDescuento(precioTotal * 0.15);
+      precioTotal = precioTotal * 0.85;
+      setPrecioFinal(precioTotal);
+    } else if (cantidadTotal >= 12 && context.descuentoCantidad) {
+      setTotalDescuento(precioTotal * 0.2);
+      precioTotal = precioTotal * 0.8;
       setPrecioFinal(precioTotal);
     }
 
@@ -259,10 +296,30 @@ function Carrito({ showCarrito, show }) {
           <p>${precioFinal}</p>
         </div>
 
-        {cantidadFinal >= 4 && context.descuentoCantidad && (
+        {cantidadFinal >= 3 &&
+          cantidadFinal < 6 &&
+          context.descuentoCantidad && (
+            <p>
+              Descuento aplicado del <span>5%</span>. Total: ${totalDescuento}
+            </p>
+          )}
+        {cantidadFinal >= 6 &&
+          cantidadFinal < 9 &&
+          context.descuentoCantidad && (
+            <p>
+              Descuento aplicado del <span>10%</span>. Total: ${totalDescuento}
+            </p>
+          )}
+        {cantidadFinal >= 9 &&
+          cantidadFinal < 12 &&
+          context.descuentoCantidad && (
+            <p>
+              Descuento aplicado del <span>15%</span>. Total: ${totalDescuento}
+            </p>
+          )}
+        {cantidadFinal >= 12 && context.descuentoCantidad && (
           <p>
-            Descuento aplicado de <span>$60</span> por par. Total:{" "}
-            <span>${cantidadFinal * 60}</span>
+            Descuento aplicado del <span>20%</span>. Total: ${totalDescuento}
           </p>
         )}
 
