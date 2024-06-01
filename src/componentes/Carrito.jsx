@@ -59,19 +59,7 @@ function Carrito({ showCarrito, show }) {
         }
 
         if (
-          cantidadFinal >= 3 &&
-          cantidadFinal < 6 &&
-          context.descuentoCantidad
-        ) {
-          descuentoCantidad = `%0ADescuento%20por%20Cantidad.%20Descuento%20de%20$${totalDescuento}%20.`;
-        } else if (
           cantidadFinal >= 6 &&
-          cantidadFinal < 9 &&
-          context.descuentoCantidad
-        ) {
-          descuentoCantidad = `%0ADescuento%20por%20Cantidad.%20Descuento%20de%20$${totalDescuento}%20.`;
-        } else if (
-          cantidadFinal >= 9 &&
           cantidadFinal < 12 &&
           context.descuentoCantidad
         ) {
@@ -172,29 +160,13 @@ function Carrito({ showCarrito, show }) {
       setPrecioFinal(precioTotal);
     }
 
-    if (cantidadTotal >= 3 && cantidadTotal < 6 && context.descuentoCantidad) {
+    if (cantidadTotal >= 6 && cantidadTotal < 12 && context.descuentoCantidad) {
       setTotalDescuento(precioTotal * 0.05);
       precioTotal = precioTotal * 0.95;
       setPrecioFinal(precioTotal);
-    } else if (
-      cantidadTotal >= 6 &&
-      cantidadTotal < 9 &&
-      context.descuentoCantidad
-    ) {
+    } else if (cantidadTotal >= 12 && context.descuentoCantidad) {
       setTotalDescuento(precioTotal * 0.1);
       precioTotal = precioTotal * 0.9;
-      setPrecioFinal(precioTotal);
-    } else if (
-      cantidadTotal >= 9 &&
-      cantidadTotal < 12 &&
-      context.descuentoCantidad
-    ) {
-      setTotalDescuento(precioTotal * 0.15);
-      precioTotal = precioTotal * 0.85;
-      setPrecioFinal(precioTotal);
-    } else if (cantidadTotal >= 12 && context.descuentoCantidad) {
-      setTotalDescuento(precioTotal * 0.2);
-      precioTotal = precioTotal * 0.8;
       setPrecioFinal(precioTotal);
     }
 
@@ -296,30 +268,16 @@ function Carrito({ showCarrito, show }) {
           <p>${precioFinal}</p>
         </div>
 
-        {cantidadFinal >= 3 &&
-          cantidadFinal < 6 &&
+        {cantidadFinal >= 6 &&
+          cantidadFinal < 12 &&
           context.descuentoCantidad && (
             <p>
               Descuento aplicado del <span>5%</span>. Total: ${totalDescuento}
             </p>
           )}
-        {cantidadFinal >= 6 &&
-          cantidadFinal < 9 &&
-          context.descuentoCantidad && (
-            <p>
-              Descuento aplicado del <span>10%</span>. Total: ${totalDescuento}
-            </p>
-          )}
-        {cantidadFinal >= 9 &&
-          cantidadFinal < 12 &&
-          context.descuentoCantidad && (
-            <p>
-              Descuento aplicado del <span>15%</span>. Total: ${totalDescuento}
-            </p>
-          )}
         {cantidadFinal >= 12 && context.descuentoCantidad && (
           <p>
-            Descuento aplicado del <span>20%</span>. Total: ${totalDescuento}
+            Descuento aplicado del <span>10%</span>. Total: ${totalDescuento}
           </p>
         )}
 
