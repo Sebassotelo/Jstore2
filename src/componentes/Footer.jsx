@@ -43,10 +43,10 @@ function Footer() {
           <div className={style.contacto__item}>
             <FaMapMarkerAlt />{" "}
             <a
-              href="https://www.google.com/maps/place/Catamarca+1326,+W3400CEU+W3400CEU,+Corrientes/@-27.4726349,-58.8335555,19z/data=!4m6!3m5!1s0x94456c9f58a152cd:0x7af34e30d000883e!8m2!3d-27.4726694!4d-58.8336816!16s%2Fg%2F11fssw2pdc"
+              href="https://maps.app.goo.gl/n462bUrkgY9dQRNdA"
               target={"_blank"}
             >
-              Catamarca 1326. Corrientes, Argentina
+              Punto de retiro: ILJO Galería Junin, local 8, Corrientes
             </a>
           </div>
         </div>
