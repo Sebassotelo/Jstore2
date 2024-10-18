@@ -34,6 +34,7 @@ function Carrito({ showCarrito, show }) {
   };
 
   let pedidoCopy = "";
+
   const confirmarPedido = () => {
     let notFoundArray = context.carrito.filter(
       (obj) => !context.productosPublicos.some((o) => o.id === obj.id)
@@ -59,12 +60,12 @@ function Carrito({ showCarrito, show }) {
         }
 
         if (
-          cantidadFinal >= 6 &&
-          cantidadFinal < 12 &&
+          cantidadFinal > 3 &&
+          cantidadFinal <= 6 &&
           context.descuentoCantidad
         ) {
           descuentoCantidad = `%0ADescuento%20por%20Cantidad.%20Descuento%20de%20$${totalDescuento}%20.`;
-        } else if (cantidadFinal >= 12 && context.descuentoCantidad) {
+        } else if (cantidadFinal > 6 && context.descuentoCantidad) {
           descuentoCantidad = `%0ADescuento%20por%20Cantidad.%20Descuento%20de%20$${totalDescuento}%20.`;
         }
         setPedido(
@@ -155,18 +156,17 @@ function Carrito({ showCarrito, show }) {
 
     if (cuponActivo && cuponActivo.activo) {
       setPrecioFinal(precioTotal - precioTotal * (cuponActivo.monto / 100));
-      console.log("asfasdasd", precioTotal * (cuponActivo.monto / 100));
     } else {
       setPrecioFinal(precioTotal);
     }
 
-    if (cantidadTotal >= 6 && cantidadTotal < 12 && context.descuentoCantidad) {
-      setTotalDescuento(precioTotal * 0.05);
-      precioTotal = precioTotal * 0.95;
+    if (cantidadTotal > 3 && cantidadTotal <= 6 && context.descuentoCantidad) {
+      setTotalDescuento(cantidadTotal * 200);
+      precioTotal = precioTotal - cantidadTotal * 200;
       setPrecioFinal(precioTotal);
-    } else if (cantidadTotal >= 12 && context.descuentoCantidad) {
-      setTotalDescuento(precioTotal * 0.1);
-      precioTotal = precioTotal * 0.9;
+    } else if (cantidadTotal > 6 && context.descuentoCantidad) {
+      setTotalDescuento(cantidadTotal * 400);
+      precioTotal = precioTotal - cantidadTotal * 400;
       setPrecioFinal(precioTotal);
     }
 
@@ -268,16 +268,18 @@ function Carrito({ showCarrito, show }) {
           <p>${precioFinal}</p>
         </div>
 
-        {cantidadFinal >= 6 &&
-          cantidadFinal < 12 &&
+        {cantidadFinal > 3 &&
+          cantidadFinal <= 6 &&
           context.descuentoCantidad && (
             <p>
-              Descuento aplicado del <span>5%</span>. Total: ${totalDescuento}
+              Descuento aplicado de <span>$200</span> por par. Ahorras: $
+              {totalDescuento}
             </p>
           )}
-        {cantidadFinal >= 12 && context.descuentoCantidad && (
+        {cantidadFinal > 6 && context.descuentoCantidad && (
           <p>
-            Descuento aplicado del <span>10%</span>. Total: ${totalDescuento}
+            Descuento aplicado de <span>$400</span> por par. Ahorras: $
+            {totalDescuento}
           </p>
         )}
 

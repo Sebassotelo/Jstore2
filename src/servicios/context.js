@@ -12,7 +12,7 @@ function Context(props) {
   const [productosPublicosCopia, setProductosPublicosCopia] = useState([]);
   const [contadorOfert, setContadorOfert] = useState(0);
   const [cupones, setCupones] = useState([]);
-  const [descuentoCantidad, setDescuentoCantidad] = useState(null)
+  const [descuentoCantidad, setDescuentoCantidad] = useState(null);
   const [busqueda, setBusqueda] = useState("");
 
   const [secciones, setSecciones] = useState([]);
@@ -57,8 +57,8 @@ function Context(props) {
     setProductos(infoDocu.items);
     setProductosCopia(infoDocu.items);
     setCupones(infoDocu.cupones);
-    setDescuentoCantidad(infoDocu.descuento)
-    recuperarStorage();
+    setDescuentoCantidad(infoDocu.descuento);
+    // recuperarStorage();
 
     const array = infoDocu.items.filter((item) => item.stock > 0);
 
@@ -97,10 +97,10 @@ function Context(props) {
   const [prevCarritoLength, setPrevCarritoLength] = useState(carrito.length);
 
   useEffect(() => {
-    if (prevCarritoLength >= 1 && carrito.length >= 0) {
-      setearLocalStorage();
-    }
-    setPrevCarritoLength(carrito.length);
+    // if (prevCarritoLength >= 1 && carrito.length >= 0) {
+    //   setearLocalStorage();
+    // }
+    // setPrevCarritoLength(carrito.length);
   }, [carrito, carrito.map((item) => item.cantidad)]);
 
   return (
@@ -112,7 +112,7 @@ function Context(props) {
         productosPublicosCopia: productosPublicosCopia,
         contadorOfert: contadorOfert,
         cupones: cupones,
-        descuentoCantidad:descuentoCantidad,
+        descuentoCantidad: descuentoCantidad,
         estadoUsuario: estadoUsuario,
         loader: loader,
         auth: auth,
@@ -135,7 +135,7 @@ function Context(props) {
         verificarLogin,
         setCupones,
         setBusqueda,
-        setDescuentoCantidad
+        setDescuentoCantidad,
       }}
     >
       {props.children}
