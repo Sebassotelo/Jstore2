@@ -2,7 +2,7 @@ import ContextGeneral from "@/servicios/contextPrincipal";
 import React, { useContext, useEffect, useState } from "react";
 import style from "../styles/ItemMenu.module.scss";
 
-function ItemMenuProductos({ funcion, item, click }) {
+function ItemMenuProductos({ funcion, item, click, tipoProducto }) {
   const [contador, setContador] = useState(0);
   const context = useContext(ContextGeneral);
   const { setBusqueda } = useContext(ContextGeneral);
@@ -11,7 +11,7 @@ function ItemMenuProductos({ funcion, item, click }) {
 
   const contadorProductos = () => {
     const nuevoArray = context.productosPublicosCopia.filter(
-      (e) => e.seccion == item
+      (e) => e.seccion == item && e.tipoProducto == tipoProducto
     );
     setContador(nuevoArray.length);
   };

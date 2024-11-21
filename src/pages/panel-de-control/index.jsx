@@ -12,6 +12,7 @@ import BuscadorPanel from "@/componentes/BuscadorPanel";
 
 import { push } from "next/router";
 import Loader from "@/componentes/Loader";
+import TipoProducto from "@/componentes/TipoProducto/TipoProducto";
 
 function Index() {
   const context = useContext(ContextGeneral);
@@ -65,6 +66,7 @@ function Index() {
             <div className={style.secciones}>
               {showSeccion == 1 && (
                 <>
+                  <TipoProducto />
                   <SeccionNueva />
 
                   <div className={style.listaProducto}>
@@ -102,6 +104,7 @@ function Index() {
                               stock={item.stock}
                               caracteristicas={item.caracteristicas}
                               id={item.id}
+                              tipoProducto={item.tipoProducto}
                               seccion={item.seccion}
                               descuento={item.descuento}
                               precioDescuento={item.precioDescuento}

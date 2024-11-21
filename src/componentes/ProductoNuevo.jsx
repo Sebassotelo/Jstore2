@@ -30,6 +30,7 @@ function ProductoNuevo({ setShowNuevoProducto }) {
     const precio = e.target.inputPrecio.value;
     const stock = e.target.inputStock.value;
     const seccion = e.target.inputSeccion.value;
+    const tipoProducto = e.target.inputTipoProducto.value;
     const caracteristicas = e.target.inputCaracteristicas.value;
     const precioDescuento = e.target.inputPrecioDescuento.value;
 
@@ -49,6 +50,7 @@ function ProductoNuevo({ setShowNuevoProducto }) {
         stock: stock,
         precio: precio,
         desc: desc,
+        tipoProducto: tipoProducto,
         seccion: seccion,
         img: image,
         caracteristicas: caracteristicas,
@@ -59,13 +61,10 @@ function ProductoNuevo({ setShowNuevoProducto }) {
       ...infoDocu.items
     );
 
-    setProductos(newArray);
-    console.log("array", newArray);
-
     //seteamos el estado y updateamos la base de datos
     //   setArray(newArray);
     updateDoc(docRef, { items: [...newArray] });
-
+    setProductos(newArray);
     toast.success(`${title} Agregado con exito`);
 
     //limpiar Form
@@ -74,10 +73,11 @@ function ProductoNuevo({ setShowNuevoProducto }) {
     e.target.inputPrecio.value = "";
     // e.target.inputImagen.value = "";
     e.target.inputStock.value = "";
+    e.target.inputTipoProducto.value = "";
     e.target.inputSeccion.value = "";
     e.target.inputCaracteristicas.value = "";
     setImage("");
-    llamadaDB();
+    // llamadaDB();
 
     // setShow(false);
     setShowNuevoProducto(false);
@@ -121,6 +121,12 @@ function ProductoNuevo({ setShowNuevoProducto }) {
         <SubirFoto setImage={setImage} setLoad={setLoadImg} />
         {/* <p>Url de Imagen:</p>
         <input type="text" name="" id="inputImagen" /> */}
+        <p>Tipo de producto ​ :</p>
+        <select name="" id="inputTipoProducto">
+          {context.tipoProductos.map((item, i) => {
+            return <option key={i}>{item}</option>;
+          })}
+        </select>
         <p>Categoría del producto ​ :</p>
         <select name="" id="inputSeccion">
           {context.secciones.map((item, i) => {

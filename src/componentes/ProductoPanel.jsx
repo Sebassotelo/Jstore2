@@ -22,6 +22,7 @@ function ProductoPanel({
   stock,
   caracteristicas,
   id,
+  tipoProducto,
   seccion,
   descuento,
   precioDescuento,
@@ -63,6 +64,7 @@ function ProductoPanel({
           <div className={style.text}>
             <h3>{title}</h3>
             <p>Stock: {stock}</p>
+            <p>Tipo de Producto: {tipoProducto}</p>
             <p>Seccion: {seccion} </p>
             <p>
               Precio:
@@ -129,6 +131,7 @@ function ProductoPanel({
           precio2={precio}
           img2={img}
           stock2={stock}
+          tipoProducto2={tipoProducto}
           seccion2={seccion}
           caracteristicas2={caracteristicas}
           id2={id}

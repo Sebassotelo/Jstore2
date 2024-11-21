@@ -15,12 +15,36 @@ function Index() {
 
   const [showCategoria, setShowCategoria] = useState(false);
 
-  const filtrarSeccion = (id) => {
+  // Función para agrupar productos por tipo y sección
+  const agruparPorTipoYSeccion = () => {
+    const agrupado = context.productosPublicosCopia.reduce((acc, producto) => {
+      const { tipoProducto, seccion } = producto;
+
+      if (!acc[tipoProducto]) {
+        acc[tipoProducto] = new Set(); // Usamos Set para evitar duplicados
+      }
+
+      acc[tipoProducto].add(seccion);
+      return acc;
+    }, {});
+
+    // Convertimos los sets a arrays
+    return Object.entries(agrupado).map(([tipoProducto, secciones]) => ({
+      tipoProducto,
+      secciones: Array.from(secciones),
+    }));
+  };
+
+  const categorias = agruparPorTipoYSeccion();
+
+  // Filtrar productos por tipo y sección
+  const filtrarSeccion = (seccion, tipoProducto) => {
     const nuevoArray = context.productosPublicosCopia.filter(
-      (item) => item.seccion == id
+      (item) => item.seccion === seccion && item.tipoProducto === tipoProducto
     );
     setProductosPublicos(nuevoArray);
   };
+
   const filtrarSeccionOfertas = () => {
     const nuevoArray = context.productosPublicosCopia.filter(
       (item) => item.descuento
@@ -33,7 +57,7 @@ function Index() {
   };
 
   useEffect(() => {
-    if (context.productosPublicos.length == 0) {
+    if (context.productosPublicos.length === 0) {
       llamadaDB();
     }
     verificarLogin();
@@ -49,9 +73,9 @@ function Index() {
 
           <div className={style.container}>
             <div className={style.container__productos}>
-              {/* menu PC */}
+              {/* Menú para PC */}
               <ul className={style.menu}>
-                <h3>Categorias</h3>
+                <h3>Categorías</h3>
                 <li
                   onClick={() => {
                     setProductosPublicos(context.productosPublicosCopia);
@@ -66,25 +90,27 @@ function Index() {
                     setBusqueda("");
                   }}
                 >
-                  Ofertas {`(${context.contadorOfert})`}{" "}
+                  Ofertas {`(${context.contadorOfert})`}
                 </li>
-
-                {context.secciones &&
-                  context.secciones.map((item, i) => {
-                    return (
+                {categorias.map(({ tipoProducto, secciones }, i) => (
+                  <div key={i}>
+                    <h4>{tipoProducto}</h4>
+                    {secciones.map((seccion, j) => (
                       <ItemMenuProductos
-                        key={i}
-                        funcion={filtrarSeccion}
-                        item={item}
+                        key={`${i}-${j}`}
+                        funcion={() => filtrarSeccion(seccion, tipoProducto)}
+                        item={seccion}
+                        tipoProducto={tipoProducto}
                       />
-                    );
-                  })}
+                    ))}
+                  </div>
+                ))}
               </ul>
 
-              {/* menu mobile */}
+              {/* Menú para móvil */}
               <ul className={style.menu__movil}>
                 <div className={style.movil__cat} onClick={mostrarMenu}>
-                  <BiMenu className={style.cat__icon} /> <h3>Categorias</h3>
+                  <BiMenu className={style.cat__icon} /> <h3>Categorías</h3>
                 </div>
 
                 {showCategoria && (
@@ -110,22 +136,28 @@ function Index() {
                         mostrarMenu();
                       }}
                     >
-                      Ofertas {`(${context.contadorOfert})`}{" "}
+                      Ofertas {`(${context.contadorOfert})`}
                     </li>
-                    {context.secciones &&
-                      context.secciones.map((item, i) => {
-                        return (
+                    {categorias.map(({ tipoProducto, secciones }, i) => (
+                      <div key={i}>
+                        <h4>{tipoProducto}</h4>
+                        {secciones.map((seccion, j) => (
                           <ItemMenuProductos
-                            key={i}
-                            funcion={filtrarSeccion}
-                            item={item}
+                            key={`${i}-${j}`}
+                            funcion={() =>
+                              filtrarSeccion(seccion, tipoProducto)
+                            }
+                            item={seccion}
+                            tipoProducto={tipoProducto}
                             click={mostrarMenu}
                           />
-                        );
-                      })}
+                        ))}
+                      </div>
+                    ))}
                   </motion.div>
                 )}
               </ul>
+
               <div className={style.tienda}>
                 <ProductosTienda />
               </div>

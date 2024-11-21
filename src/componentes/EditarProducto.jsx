@@ -19,6 +19,7 @@ function EditarProducto({
   precio2,
   img2,
   stock2,
+  tipoProducto2,
   seccion2,
   caracteristicas2,
   id2,
@@ -47,6 +48,7 @@ function EditarProducto({
     const precio = e.target.inputPrecio.value;
     const stock = e.target.inputStock.value;
     const seccion = e.target.inputSeccion.value;
+    const tipoProducto = e.target.inputTipoProducto.value;
     const caracteristicas = e.target.inputCaracteristicas.value;
     const descuento = descuentoActivo;
     const precioDescuento = e.target.inputPrecioDescuento.value;
@@ -59,6 +61,7 @@ function EditarProducto({
       stock: stock,
       precio: precio,
       desc: desc,
+      tipoProducto: tipoProducto,
       seccion: seccion,
       img: image,
       caracteristicas: caracteristicas,
@@ -67,26 +70,42 @@ function EditarProducto({
       destacado: destacadoActivo,
     };
 
+    // Aca copiamos el array original
     const productosCopia = [...context.productosCopia];
     const index = productosCopia.findIndex((item) => item.id === id2);
 
+    // Aca copiamos el array mostrado
+    const prodMostradosCopia = [...context.productos];
+    const indexProdMostrados = prodMostradosCopia.findIndex(
+      (item) => item.id === id2
+    );
+
     // Actualizar la noticia en el array copiado
     productosCopia[index] = nuevoProducto;
+
+    prodMostradosCopia[indexProdMostrados] = nuevoProducto;
 
     //seteamos el estado y updateamos la base de datos
 
     const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
     await updateDoc(docRef, { items: [...productosCopia] });
 
+    // Seteamos los prod mostrados
+    setProductos(prodMostradosCopia);
+
+    // Seteamos el array original
+    setProductosCopia(productosCopia);
+
     //limpiar Form
     e.target.inputTitle.value = "";
     e.target.inputDesc.value = "";
     e.target.inputPrecio.value = "";
     e.target.inputStock.value = "";
+    e.target.inputTipoProducto.value = "";
     e.target.inputSeccion.value = "";
     e.target.inputCaracteristicas.value = "";
     setImage("");
-    llamadaDB();
+    // llamadaDB();
     toast.success("Cambio Guardado");
     setEditarProducto(false);
   };
@@ -153,6 +172,16 @@ function EditarProducto({
         </div>
         <p>Url de Imagen:</p>
         <SubirFoto setImage={setImage} setLoad={setLoadImg} />
+        <p>Tipo de Producto:</p>
+        <select
+          name=""
+          id="inputTipoProducto"
+          defaultValue={tipoProducto2 ? tipoProducto2 : ""}
+        >
+          {context.tipoProductos.map((item, i) => {
+            return <option key={i}>{item}</option>;
+          })}
+        </select>
         <p>Seccion:</p>
         <select
           name=""

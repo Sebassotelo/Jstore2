@@ -15,6 +15,7 @@ function Context(props) {
   const [descuentoCantidad, setDescuentoCantidad] = useState(null);
   const [busqueda, setBusqueda] = useState("");
 
+  const [tipoProductos, setTipoProductos] = useState([]);
   const [secciones, setSecciones] = useState([]);
   const [estadoUsuario, setEstadoUsuario] = useState(0);
 
@@ -65,6 +66,7 @@ function Context(props) {
     setProductosPublicos(array);
     setProductosPublicosCopia(array);
     setSecciones(infoDocu.secciones);
+    setTipoProductos(infoDocu.tipoProducto);
 
     const nuevoArray = array.filter((e) => e.descuento);
     setContadorOfert(nuevoArray.length);
@@ -118,10 +120,12 @@ function Context(props) {
         auth: auth,
         firestore: firestore,
         user: user,
+        tipoProductos: tipoProductos,
         secciones: secciones,
         carrito: carrito,
         actuCarrito: actuCarrito,
         busqueda: busqueda,
+        setTipoProductos,
         setSecciones,
         setProductos,
         setProductosCopia,

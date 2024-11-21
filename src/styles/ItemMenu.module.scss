@@ -1,6 +1,9 @@
 .li__movil {
   display: none;
 }
+.li {
+  padding-left: 15px;
+}
 
 @media (max-width: 900px) {
   .li {
@@ -8,5 +11,6 @@
   }
   .li__movil {
     display: block;
+    padding-left: 15px;
   }
 }
