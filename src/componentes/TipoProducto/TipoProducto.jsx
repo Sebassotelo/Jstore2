@@ -55,7 +55,7 @@ function TipoProducto() {
         <input
           type="text"
           id="inputTipoProducto"
-          placeholder="Ingrese el nombre de una seccion nueva"
+          placeholder="Ingrese el nombre del tipo de producto"
         />
         <button type="submit">Agregar Tipo Producto</button>
       </form>
